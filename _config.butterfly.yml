@@ -11,14 +11,14 @@ nav:
   fixed: false
 
 menu:
-  首頁: / || fas fa-home
+  首页: / || fas fa-home
   列表||fas fa-list:
     电影: /movies/ || fas fa-video
     tag: /tags/ || fas fa-tags
-  音乐: /music/ || fas fa-music
+    音乐: /music/ || fas fa-music
   图书: /books/ || fa fa-book
   照片: /Gallery/ || fas fa-images
-  关于: /about/ || fas fa-heart
+  知识点: /about/ || fas fa-heart
   留言板: /chat/ || fa fa-lightbulb-o
 # --------------------------------------
 # 代碼塊設置
@@ -554,8 +554,9 @@ search:
 
   # 本地搜索
   local_search:
+    enable: true
     # 頁面加載時預加載搜索數據
-    preload: false
+    preload: true
     # 每篇文章顯示的頂部 n 個搜索結果，設置為 -1 顯示所有結果
     top_n_per_article: 1
     # 將 HTML 字符串反轉義為可讀內容
@@ -1201,7 +1202,7 @@ css_prefix: true
 # 插入代碼到 head（在 '</head>' 標籤之前）和底部（在 '</body>' 標籤之前）
 inject:
   head:
-    - <link rel="stylesheet" href="css/touming.css">
+    - <link rel="stylesheet" href="/css/touming.css">
   bottom:
     - <div class="aplayer no-destroy" data-id="7495004841" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div>
 aplayer:

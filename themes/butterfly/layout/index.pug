@@ -1,13 +1,5 @@
 extends includes/layout.pug
 
 block content
-  script#config-diff.
-    var GLOBAL_CONFIG_SITE = {
-      title: '#{titleVal}',
-      isHighlightShrink: !{isHighlightShrink},
-      isToc: !{showToc},
-      pageType: '!{page.type == 'shuoshuo' ? 'shuoshuo' : globalPageType}'
-    }
-
   include ./includes/mixins/indexPostUI.pug
   +indexPostUI
