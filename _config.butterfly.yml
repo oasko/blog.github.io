@@ -15,8 +15,8 @@ menu:
   列表||fas fa-list:
     电影: /movies/ || fas fa-video
     tag: /tags/ || fas fa-tags
-    音乐: /music/ || fas fa-music
-  图书: /books/ || fa fa-book
+    图书: /books/ || fa fa-book
+  音乐: /music/ || fas fa-music
   照片: /Gallery/ || fas fa-images
   知识点: /about/ || fas fa-heart
   留言板: /chat/ || fa fa-lightbulb-o
