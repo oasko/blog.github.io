@@ -3,6 +3,7 @@ title: tryhackme 密码学基础
 date: 2025-02-10 11:10:37
 tags: 密码学
 top_img: transparent
+cover: https://s2.loli.net/2025/02/14/ZeGbcFxgUvfNqP1.jpg
 ---
 
 话说回来 来到了密码学专区了
@@ -304,3 +305,157 @@ gpg --decrypt message.gpg
 ```
 
 到此第二部分也简单介绍到这里
+
+# Hashing Basics
+哈希值是由哈希函数计算的固定大小的字符串或字符。哈希函数接受任意大小的输入并返回固定长度的输出，即哈希值。
+
+我们也能通过对比hash值来判断下载的副本是否与原始文件完全相同
+
+## task2
+### 什么是哈希函数
+
+哈希函数不同于加密。它没有密钥，并且不可能（或计算上不切实际）从输出返回到输入。输出具有固定大小。
+
+### 什么是哈希碰撞
+
+哈希碰撞是指两个不同的输入产生相同的输出。
+
+### 题
+来看看题
+
+![task2](/images/tryhackme-密码学基础/hash/task2.png)
+
+第一问问照片的sha256值
+
+```
+sha256sum passport.jpg
+```
+来获得照片的sha256的值
+
+第二问
+md5能输出一个128位(16字节)的散列值 答案就是16
+
+第三问
+八位hash输出 可以当成2^8=256
+
+## task3
+身份验证的密码存储不安全
+
+密码方面的三种不安全做法：
+- 以明文形式存储密码
+- 使用已弃用的加密方式存储密码
+- 使用不安全的哈希算法存储密码
+
+这个问就是找密码
+
+![task3](/images/tryhackme-密码学基础/hash/task3.png)
+
+问第20个密码是啥 直接head 查到第二十个就行了
+
+```
+head -n 20 rockyou.txt
+```
+
+![task3](/images/tryhackme-密码学基础/hash/mima.png)
+
+## task4
+使用哈希存储密码
+
+Rainbow Table 彩虹表(彩虹表是哈希到明文的查找表) 因此您可以从哈希中快速找出用户刚刚拥有的密码。
+
+[crackstation](https://crackstation.net/) 和[hashes.com](https://hashes.com/en/decrypt/hash)能给我们帮助
+内部使用大量彩虹表来提供快速破解无盐哈希密码的功能。
+
+这个时候要提一嘴了 什么是加盐
+
+加盐是指在加密过程中，向原始数据（通常是密码）中添加一个随机生成的字符串（即“盐”），然后再进行加密。
+
+这个随机字符串通常是唯一的，并且与原始数据一起存储。 加盐的目的是增加加密数据的复杂性，使得即使两个相同的密码，其加密结果也会不同。
+
+![task4](/images/tryhackme-密码学基础/hash/task4.png)
+
+问题一
+我们能在上面的表上查到
+
+![task4](/images/tryhackme-密码学基础/hash/caihong.png)
+
+问题二
+
+我们把hash值复制到[hashes.com](https://hashes.com/en/decrypt/hash)能破解出结果
+
+![task4](/images/tryhackme-密码学基础/hash/tryhackme.png)
+
+
+## task5
+识别密码哈希值
+
+在Linux上，密码哈希存储在 中/etc/shadow，通常只有 root 才能读取。它们过去存储在 中/etc/passwd，每个人都可以读取。
+
+该shadow文件包含密码信息。每行包含九个字段，以冒号 ( :) 分隔。前两个字段是登录名和加密密码。
+
+加密密码字段包含哈希密码，该密码由四个部分组成：前缀（算法 ID）、选项（参数）、盐和哈希。
+
+![task5](/images/tryhackme-密码学基础/hash/task5.png)
+
+第一问遇事不决直接百度 能查出是256的大小
+
+第二问和第三问 我们在[Hashcat 示例](https://hashcat.net/wiki/doku.php?id=example_hashes)能找到我们要的答案
+
+第二问
+
+![task5](/images/tryhackme-密码学基础/hash/2410.png)
+
+![task5](/images/tryhackme-密码学基础/hash/scrypt.png)
+
+## task6
+密码破解
+
+可以在[hashcat](https://hashcat.net/wiki/doku.php?id=example_hashes)和[John the Ripper](https://www.openwall.com/john/)这两个工具上
+
+第一个最好在主机上搞 榨干全部性能
+
+[哈希分析](https://www.tunnelsup.com/hash-analyzer/)
+
+来试试手
+
+![task6](/images/tryhackme-密码学基础/hash/task6.png)
+
+第一问
+我们用john来破解 
+$2a$就是bcrypt
+```
+john hash.txt -format=bcrypt -wordlist=/usr/share/wordlists
+```
+![task6](/images/tryhackme-密码学基础/hash/850.png)
+
+能破解出85208520
+
+第二 三 四问 我们都可以在[这里](https://hashes.com/en/decrypt/hash)去破解
+
+主要是不知道为啥这个机子的john很抽象 就只能在网站那破解
+
+![task6](/images/tryhackme-密码学基础/hash/holl.png)
+
+![task6](/images/tryhackme-密码学基础/hash/spaceman.png)
+
+![task6](/images/tryhackme-密码学基础/hash/funforyou.png)
+
+## task7
+![task7](/images/tryhackme-密码学基础/hash/task7.png)
+
+第一问
+```
+sha256sum 
+```
+![task7](/images/tryhackme-密码学基础/hash/2561.png)
+
+第二问
+![task7](/images/tryhackme-密码学基础/hash/512.png)
+
+
+## task8
+使用base64解码RU5jb2RlREVjb2RlCg==
+
+把这串复制到[cyberchef](https://gchq.github.io/CyberChef/)里面能得出解码：ENcodeDEcode
+
+第三部分就这样结束了 后面还会补充多点内容 
